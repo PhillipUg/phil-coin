@@ -1,10 +1,17 @@
 import sha256 from 'crypto-js/sha256.js'
 
+class Transaction{
+  constructor(fromAddress, toAddress, amount){
+    this.fromAddress = fromAddress
+    this.toAddress = toAddress
+    this.amount = amount
+  }
+}
+
 class Block {
-  constructor(index, timestamp, data, previousHash) {
-    this.index = index
+  constructor(timestamp, transactions, previousHash) {
     this.timestamp = timestamp
-    this.data = data
+    this.transactions = transactions
     this.previousHash = previousHash
     this.hash = this.calculateHash()
     this.nonce = 0;
@@ -27,11 +34,13 @@ class Block {
 class Blockchain {
   constructor() {
     this.chain = [this.createGenesisBlock()];
-    this.difficulty = 5;
+    this.difficulty = 2;
+    this.pendingTransactions = []
+    this.miningReward = 100;
   }
 
   createGenesisBlock() {
-    return new Block(0, "12/12/2020", "Genesis block", "0")
+    return new Block("12/12/2020", "Genesis block", "0")
   }
 
   getLatestBlock() {
@@ -57,10 +66,6 @@ class Blockchain {
   }
 }
 
-
 let phil_coin = new Blockchain()
-console.log("Mining block 1...")
-phil_coin.addBlock(new Block(1, "13/12/2020", { amount: 4 }))
-console.log("Mining block 2...")
-phil_coin.addBlock(new Block(2, "14/12/2020", { amount: 20 }))
+
 
