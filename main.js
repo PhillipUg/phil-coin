@@ -1,4 +1,3 @@
-import SHA256 from 'crypto-js/sha256'
 import sha256 from 'crypto-js/sha256'
 
 class Block {
@@ -11,7 +10,7 @@ class Block {
   }
 
   calculateHash() {
-    return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)).toString()
+    return sha256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)).toString()
   }
 }
 
@@ -35,3 +34,10 @@ class Blockchain {
     this.chain.push(newBlock)
   }
 }
+
+
+let phil_coin = new Blockchain()
+phil_coin.addBlock(new Block(1, "13/12/2020", { amount: 4 }))
+phil_coin.addBlock(new Block(2, "14/12/2020", { amount: 20 }))
+
+console.log(JSON.stringify(phil_coin, null, 4));
